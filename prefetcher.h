@@ -11,14 +11,14 @@ class prefetcher
 public:
 	typedef int pageNumber;
 
-	typedef struct pageHandler {
-		pageNumber pageNum;
-		char *data;	
-	} pageHandler;
+	// typedef struct pageHandler {
+	// 	pageNumber pageNum;
+	// 	char *data;	
+	// } pageHandler;
 
 	prefetcher();
 
-	int prefetch(Buffer *const buff);
+	int prefetch(Buffer *const buff, 
 
 	~prefetcher();
 	
