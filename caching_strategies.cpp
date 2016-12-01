@@ -1,7 +1,7 @@
 // ***-------------------------***-------------------------*** //
 #include "buffer.h"
 #include <stdlib.h>
-#include "caching_mechanisms.h"
+#include "caching_strategies.h"
 // ***-------------------------***-------------------------*** //
 
 /*
