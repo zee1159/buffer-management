@@ -1,5 +1,5 @@
 #include "Buffer.h"
-#include "Cache.h"
+#include "caching_strategies.h"
 #include <stdlib.h>
 
 
@@ -13,7 +13,7 @@ void Buffer::Buffer(size_t capacity, size_t pagesize, ReplacementStrategy strat)
 		stratId = strat;
 
 		numPages = (capacity_ / pagesize_);
-		data = new char[capacity_];
+		//data = new char[capacity_];
 
 		pages = malloc(sizeof(pagesize_) * numPages);
 
@@ -61,3 +61,7 @@ bool Buffer::isFull() {
 	}
 	return true;
 }
+
+// void Buffer::~Buffer() {
+// 	delete[] data
+// }
