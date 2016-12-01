@@ -58,7 +58,7 @@ void Buffer::append(const void *data, size_t size) {
 }
 
 void Buffer::bufferManager(const void *data) {
-	lru(pages, data, numPages);
+	cache_manager.lru(pages, data, numPages);
 }
 
 bool Buffer::isFull() {

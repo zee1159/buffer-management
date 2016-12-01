@@ -89,8 +89,9 @@
  *               function called decreaseRankingForPages(...)
  */
 
+caching_strategies::caching_strategies(){}
 
-void lru (Buffer::Page *pages, const void *data, int numPages)
+void caching_strategies::lru (Buffer::Page *pages, const void *data, int numPages)
 {
     int eviction_index = 0;
     int minimum_rank = INT_MAX;

@@ -4,6 +4,7 @@
 #include <cstddef>
 #include <cstring>
 #include <stdexcept>
+#include "caching_strategies.h"
 
 class Buffer
 {
@@ -51,6 +52,8 @@ private:
   	
   	ReplacementStrategy strategyId;
   	Page *pages;
+
+  	caching_strategies cache_manager;
 
   	
 
