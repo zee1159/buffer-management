@@ -17,12 +17,12 @@ public:
 
 	isFull();
 
-	~Buffer();
+	//~Buffer();
 	
 
 	//variables
 	int numPages;		// Total number of pages in cache
-  	void *data;			// points to the pages in cache
+  	//void *data_;			// points to the pages in cache
   	size_t capacity_;	// total size of the buffer
   	size_t size_;
   	
