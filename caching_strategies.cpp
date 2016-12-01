@@ -23,7 +23,7 @@ struct BufferPool
 struct Page
 {
   char *pagedata;
-  i1
+  int pagenum; default value = -1 => empty_page
   int dirtybit; default value = -1 => not_dirty
   int ranking; default value = INT_MAX
   int readcount; default value = 0
@@ -78,7 +78,7 @@ struct Page
  *               page.
  *
  *               The rankings of all the other pages is updated
- *               in the decrease ranking method, wherein we
+ *               thereafter, wherein we
  *               reduce the ranking of each by subtracting 1 from
  *               their existing ranking.
  *               
@@ -87,15 +87,14 @@ struct Page
  */
 
 
-void lru (BufferPool *const bm, Page *freshpage)
+void lru (Page *pages, const void *data, int numPages)
 {
-  Page *pages = (page *)bm->data;
-  int i;
   int eviction_index = 0;
   int minimum_rank = INT_MAX;
 
+  int i;
   //search for min rank.
-  for (i = 0; i<bm->numPages; i++)
+  for (i = 0; i<numPages; i++)
   {
     if (pages[i].ranking < minimum_rank)
     {
@@ -104,35 +103,20 @@ void lru (BufferPool *const bm, Page *freshpage)
     }
   }
 
-  if(pages[eviction_index].dirtybit == DIRTY_FLAG)
-  {
-    // Write block to backing store
-    //write_function_prototype(bm, &pages[eviction_index]);
-  }
-  pages[eviction_index].pagedata = freshpage->pagedata;
-  pages[eviction_index].pagenum = freshpage->pagenum;
-  pages[eviction_index].dirtybit = freshpage->dirtybit;
+  pages[eviction_index].pagedata = data;
+  pages[eviction_index].pagenum = 1;
 
-  decreaseRankingForPages(bm, eviction_index);
-}
-
-// ***-------------------------***-------------------------*** //
-
-void decreaseRankingForPages(BufferPool *const bm, int evictedpage_index)
-{
-  Page *pages = (Page *) bm->data;
   int i;
-  for (i = 0; i<bm->numPages; i++)
+  for (i = 0; i<numPages; i++)
   {
-    if (i != evictedpage_index || pages[i].pagenum != -1)
-    {
-      pages[i].ranking = pages[i].ranking - 1;
-    }
-    if (i == evictedpage_pageindex)
-    {
-      pages[i].ranking = INT_MAX;
-    }
+      if (i != evictedpage_index || pages[i].pagenum != -1)
+      {
+          pages[i].ranking = pages[i].ranking - 1;
+      }
+      if (i == evictedpage_pageindex)
+      {
+          pages[i].ranking = INT_MAX;
+      }
   }
 }
-
 // ***-------------------------***-------------------------*** //
