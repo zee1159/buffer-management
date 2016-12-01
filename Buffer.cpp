@@ -1,4 +1,5 @@
 #include "Buffer.h"
+#include "Cache.h"
 #include <stdlib.h>
 
 
@@ -9,31 +10,54 @@ void Buffer::Buffer(size_t capacity, size_t pagesize, ReplacementStrategy strat)
 		capacity_ = capacity; 
 		pagesize_ = pagesize;
 
-		numPages = (capacity / pagesize);
+		stratId = strat;
+
+		numPages = (capacity_ / pagesize_);
 		data = new char[capacity_];
 
-		Page *pages = malloc(sizeof(Page) * numPages);
+		pages = malloc(sizeof(pagesize_) * numPages);
+
+		for (int i = 0; i < numPages; i++)
+		{
+			pages[i].pagedata = NULL;
+			pages[i].pagenum = -1;	//empty page
+			// pages[i].dirtybit = -1;	//dirty_unflag
+			pages[i].ranking = INT_MAX;
+			// pages[i].readcount = 0;
+		}
+	}
+	else {
+		throw std::invalid_argument("Error invalid buffer size!");
 	}
 }
 
-// void Buffer::Buffer(const Buffer& buff) {
-// 	if(buff.capacity > 0 )
-// 	{
-// 		data = new char[buff.capacity];
+void Buffer::append(const void *data, size_t size) {
 
-// 		if(buff.size > 0)
-// 		  std::memcpy (data, buff.data, buff.size);
+	if(size > )
+	if (!isFull()) {
+		for (int i = 0; i < numPages; i++)
+		{
+			if(pages[i].pagenum == -1) {
+				pages[i].data = data;
+				pages[i].pagenum = 1;
+				lastPageUpdate = i;
+			}
+		}
+	}
+	else {
+		bufferManager(data);
+	}
 
-// 		// if(buff.lastposition >= 0)
-// 		// 	lastposition = buff.lastposition;
-// 	}
-// 	else data_ = 0;
+}
 
-// 	size = buff.size;
-// 	capacity = buff.capacity;
-// 	strate
+void Buffer::bufferManager(const void *data) {
+	lru(*pages, data, numPages);
+}
 
-
-// }
-
-void Buffer::append()
+bool Buffer::isFull() {
+	if (lineCount < numPages)
+	{
+		return false;	
+	}
+	return true;
+}
