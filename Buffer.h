@@ -9,6 +9,9 @@ class Buffer
 {
 
 public:
+
+	Buffer();
+
 	//Buffer(size_t capacity, ReplacementStrategy strat);
 	Buffer(size_t capacity, size_t pagesize);	// Buffer inititalization function
 
@@ -47,7 +50,7 @@ private:
   	int lineCount = 0;	// points to count of cache lines
   	
   	ReplacementStrategy strategyId;
-  	Page pages;
+  	Page *pages;
 
   	
 

@@ -1,7 +1,11 @@
 #include "prefetcher.h"
+#include "Buffer.h"
 #include <stdlib.h>
 
-int prefetcher::prefetch(Buffer *const buff, FILE *fh, size_t size, size_t count){
+
+prefetcher::prefetcher(){}
+
+int prefetcher::prefetch(Buffer buff, FILE *fh, size_t size, size_t count){
 	int check, lastposition;
 	char *lastPageData;
 	bool checkData;
@@ -32,7 +36,7 @@ int prefetcher::prefetch(Buffer *const buff, FILE *fh, size_t size, size_t count
 		throw std::invalid_argument("Error reading from file!");
 	}
 
-	append(data, size);
+	buff.append(data, size);
 
 	//returning file handler pointer to the previous position
 	fseek(fh, previous_pos, SEEK_SET);

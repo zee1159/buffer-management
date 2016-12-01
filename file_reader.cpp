@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "prefetcher.h"
+#include "Buffer.h"
 
 int main()
 {
@@ -11,8 +12,10 @@ int main()
 	char *buff;
 	int status;
 
-	Buffer buffer;
-	buffer.Buffer(1000, 10);
+	prefetcher pf;
+
+	Buffer buffer(1000, 10);
+	//buffer.Buffer(1000, 10);
 
 	fh = fopen("helloworld.c", "rb");
 
@@ -24,7 +27,7 @@ int main()
 	buff = (char*) malloc(sizeof(char) * count);
 
 	fread(buff, 1, 10, fh);
-	status = prefetch(buffer, fh, size, count);
+	status = pf.prefetch(buffer, fh, size, count);
 
 	printf("Status: %d\n", status);
 
