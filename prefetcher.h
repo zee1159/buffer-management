@@ -20,7 +20,7 @@ public:
 
 	int prefetch(Buffer *const buff, FILE *fh, size_t size, size_t count);
 
-	~prefetcher();
+	// ~prefetcher();
 	
 };
 
