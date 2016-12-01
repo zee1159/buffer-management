@@ -7,8 +7,15 @@
 
 class Buffer
 {
+
 public:
-	Buffer(const Buffer& buff);	// Buffer inititalization function
+	Buffer(size_t capacity, ReplacementStrategy strat);	// Buffer inititalization function
+
+	append(const void *data, size_t size);
+
+	bufferManager(const void *data);
+
+	isFull();
 
 	~Buffer();
 	
@@ -16,18 +23,22 @@ public:
 	//variables
 	int numPages;		// Total number of pages in cache
   	void *data;			// points to the pages in cache
-  	size_t capacity;	// total size of the buffer
-  	size_t size;
-  	int lastposition; 	// points to last updated page
-  	ReplacementStrategy strategyIdß;
+  	size_t capacity_;	// total size of the buffer
+  	size_t size_;
+  	
+  	int lastPageUpdate = 0; 	// points to last updated page
+  	int lineCount = 0;	// points to count of cache lines
+  	
+  	ReplacementStrategy strategyId;
+  	Page pages;
 
   	typedef struct Page
 	{
 	  char *pagedata;	// data contained in page
 	  int pagenum; 		// default value = -1 => empty_page
-	  int dirtybit; 	// default value = -1 => not_dirty
+	  // int dirtybit; 	// default value = -1 => not_dirty
 	  int ranking; 		// default value = INT_MAX
-	  int readcount; 	// default value = 0
+	  // int readcount; 	// default value = 0
 	} Page;
 
 	typedef enum ReplacementStrategy {
@@ -35,6 +46,7 @@ public:
 	  RS_LRU = 1,
 	  RS_LFU = 2,
 	} ReplacementStrategy;
+
 };
 
 #endif
