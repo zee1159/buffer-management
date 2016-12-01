@@ -23,7 +23,7 @@ struct BufferPool
 struct Page
 {
   char *pagedata;
-  int pagenum; default value = -1 => empty_page
+  i1
   int dirtybit; default value = -1 => not_dirty
   int ranking; default value = INT_MAX
   int readcount; default value = 0
