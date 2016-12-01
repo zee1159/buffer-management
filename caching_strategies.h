@@ -4,7 +4,7 @@
 class caching_strategies
 {
 public:
-  void lru (Page *pages, const void *data, int numPages);
+  void lru (Buffer::Page *pages, const void *data, int numPages);
 };
 
 #endif

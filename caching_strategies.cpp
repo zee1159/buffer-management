@@ -1,47 +1,47 @@
 // ***-------------------------***-------------------------*** //
 #include "buffer.h"
 #include <stdlib.h>
-#include <limits.h>
 #include "caching_strategies.h"
+#include <limits.h>
 // ***-------------------------***-------------------------*** //
 
 /*
 
-Assuming the following kind of structures
-to define the buffer class and the page
-class : -
+ Assuming the following kind of structures
+ to define the buffer class and the page
+ class : -
 
-struct BufferPool
-{
-  int numPages; // the num of pages currently
-                   residing in the cache.
+ struct BufferPool
+ {
+ int numPages; // the num of pages currently
+ residing in the cache.
 
-  void *data; // represents the array of pages,
-                 which represents the data inside
-                 the cache.
+ void *data; // represents the array of pages,
+ which represents the data inside
+ the cache.
 
-  size_t capacity; // the total capacity of the cache
-}
+ size_t capacity; // the total capacity of the cache
+ }
 
-struct Page
-{
-  char *pagedata;
-  int pagenum; default value = -1 => empty_page
-  int dirtybit; default value = -1 => not_dirty
-  int ranking; default value = INT_MAX
-  int readcount; default value = 0
-}
+ struct Page
+ {
+ char *pagedata;
+ int pagenum; default value = -1 => empty_page
+ int dirtybit; default value = -1 => not_dirty
+ int ranking; default value = INT_MAX
+ int readcount; default value = 0
+ }
 
  Note that the default values are only assumptions
  and just a way of representing the data when we will
  first initialize the buffer.
 
  INT_MAX = 1000 ; basically need some large value.
-                  this will be used later to define
-                  'ranking' and thereafter guide our
-                  replacement policy, as we shall see.
+ this will be used later to define
+ 'ranking' and thereafter guide our
+ replacement policy, as we shall see.
 
-*/
+ */
 
 // ***-------------------------***-------------------------*** //
 
@@ -90,36 +90,36 @@ struct Page
  */
 
 
-void lru (Page *pages, const void *data, int numPages)
+void lru (Buffer::Page *pages, const void *data, int numPages)
 {
-  int eviction_index = 0;
-  int minimum_rank = INT_MAX;
+    int eviction_index = 0;
+    int minimum_rank = INT_MAX;
 
-  int i;
-  //search for min rank.
-  for (i = 0; i<numPages; i++)
-  {
-    if (pages[i].ranking < minimum_rank)
+    int i;
+    //search for min rank.
+    for (i = 0; i<numPages; i++)
     {
-      minimum_rank = pages[i].ranking;
-      eviction_index = i;
+        if (pages[i].ranking < minimum_rank)
+        {
+            minimum_rank = pages[i].ranking;
+            eviction_index = i;
+        }
     }
-  }
 
-  pages[eviction_index].pagedata = data;
-  pages[eviction_index].pagenum = 1;
+    pages[eviction_index].pagedata = (char *)data;
+    pages[eviction_index].pagenum = 1;
 
-  int i;
-  for (i = 0; i<numPages; i++)
-  {
-      if (i != evictedpage_index || pages[i].pagenum != -1)
-      {
-          pages[i].ranking = pages[i].ranking - 1;
-      }
-      if (i == evictedpage_pageindex)
-      {
-          pages[i].ranking = INT_MAX;
-      }
-  }
+    int j;
+    for (j = 0; j<numPages; j++)
+    {
+        if (j != eviction_index || pages[j].pagenum != -1)
+        {
+            pages[j].ranking = pages[j].ranking - 1;
+        }
+        if (j == eviction_index)
+        {
+            pages[j].ranking = INT_MAX;
+        }
+    }
 }
 // ***-------------------------***-------------------------*** //
