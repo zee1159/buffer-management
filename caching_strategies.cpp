@@ -1,5 +1,7 @@
 // ***-------------------------***-------------------------*** //
-
+#include "buffer.h"
+#include <stdlib.h>
+#include "caching_mechanisms.h"
 // ***-------------------------***-------------------------*** //
 
 /*
@@ -81,7 +83,7 @@ struct Page
  *               thereafter, wherein we
  *               reduce the ranking of each by subtracting 1 from
  *               their existing ranking.
- *               
+ *
  *               The last two things are updated in a seperate
  *               function called decreaseRankingForPages(...)
  */
