@@ -1,21 +1,24 @@
 #include "Buffer.h"
 #include "caching_strategies.h"
 #include <stdlib.h>
+#include <limits.h>
 
 
-void Buffer::Buffer(size_t capacity, size_t pagesize, ReplacementStrategy strat) {
+//void Buffer::Buffer(size_t capacity, size_t pagesize, ReplacementStrategy strat) {
+Buffer::Buffer(size_t capacity, size_t pagesize) {
 
 	if(capacity > 0 )
 	{
 		capacity_ = capacity; 
 		pagesize_ = pagesize;
 
-		stratId = strat;
+		//stratId = strat;
+		//stratId = 0;
 
 		numPages = (capacity_ / pagesize_);
 		//data = new char[capacity_];
 
-		pages = malloc(sizeof(pagesize_) * numPages);
+		*pages = malloc(sizeof(pagesize_) * numPages);
 
 		for (int i = 0; i < numPages; i++)
 		{
@@ -33,7 +36,8 @@ void Buffer::Buffer(size_t capacity, size_t pagesize, ReplacementStrategy strat)
 
 void Buffer::append(const void *data, size_t size) {
 
-	if(size > )
+	/* Implement data size check */
+	//if(size > )
 	if (!isFull()) {
 		for (int i = 0; i < numPages; i++)
 		{

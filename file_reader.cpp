@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <prefetcher.h>
+#include "prefetcher.h"
 
 int main()
 {
@@ -12,7 +12,7 @@ int main()
 	int status;
 
 	Buffer buffer;
-	buffer.Buffer(size_t 1000, size_t 10);
+	buffer.Buffer(1000, 10);
 
 	fh = fopen("helloworld.c", "rb");
 
