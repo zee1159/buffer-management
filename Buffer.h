@@ -9,28 +9,28 @@ class Buffer
 {
 
 public:
-	Buffer(size_t capacity, ReplacementStrategy strat);	// Buffer inititalization function
+	Buffer(size_t capacity);	// Buffer inititalization function
 
-	append(const void *data, size_t size);
+	void append(const void *data, size_t size);
 
-	bufferManager(const void *data);
+	void bufferManager(const void *data);
 
-	isFull();
+	bool isFull();
 
 	//~Buffer();
-	
+
 
 	//variables
 	int numPages;		// Total number of pages in cache
   	//void *data_;			// points to the pages in cache
   	size_t capacity_;	// total size of the buffer
   	size_t size_;
-  	
+
   	int lastPageUpdate = 0; 	// points to last updated page
   	int lineCount = 0;	// points to count of cache lines
-  	
-  	ReplacementStrategy strategyId;
-  	Page pages;
+
+  	//ReplacementStrategy strategyId;
+  	Buffer::Page pages;
 
   	typedef struct Page
 	{
